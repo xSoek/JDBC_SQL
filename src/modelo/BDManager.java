@@ -1,4 +1,4 @@
-package controlador;
+package modelo;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,10 +12,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import controlador.Controller;
+
 import java.util.Map.Entry;
 
-import modelo.ConexionBD;
-import modelo.Persona;
 import vista.ConsoleView;
 
 public class BDManager implements AccesoaDatos {
@@ -26,8 +27,8 @@ public class BDManager implements AccesoaDatos {
 	private String BDFich = "";
 	private Controller control;
 
-	public void conectarControl (Controller control) {
-		this.control= control;
+	public void conectarControl(Controller control) {
+		this.control = control;
 	}
 
 	public BDManager() {
@@ -35,25 +36,23 @@ public class BDManager implements AccesoaDatos {
 
 	public String Consulta(String query) {
 		try {
-			String code = null;
-			String name = null;
-			int number = 31101;
+
 			int columna = 3;
 			Statement stmt = conn.getConn().createStatement();
 			ResultSet rset = stmt.executeQuery(query);
 
+			// Recoge las filas de la query, las imprime y las guarda para un uso posterior
 			while (rset.next()) {
 				for (int i = 1; i <= columna; i++) {
 					if (i == 1) {
-						code = rset.getString(i);
+
 						BDFich = BDFich + rset.getString(i) + ":";
 						System.out.print(rset.getString(i) + "\t");
 					} else if (i == 2) {
-						name = rset.getString(i);
+
 						BDFich = BDFich + rset.getString(i) + ":";
 						System.out.print(rset.getString(i) + "\t");
 					} else {
-						number = rset.getInt(i);
 						BDFich = BDFich + Integer.toString(rset.getInt(i)) + "\n:";
 						System.out.print(rset.getInt(i) + "\t");
 					}
@@ -77,6 +76,7 @@ public class BDManager implements AccesoaDatos {
 			int columna = 3;
 			Statement stmt = conn.getConn().createStatement();
 			ResultSet rset = stmt.executeQuery("SELECT * FROM basedatos1.inicio");
+
 			while (rset.next()) {
 				for (int i = 1; i <= columna; i++) {
 					if (i == 1) {
@@ -105,7 +105,11 @@ public class BDManager implements AccesoaDatos {
 	@Override
 	public void AgregarDato(String codigo, String nombre, int numero) {
 		// TODO Auto-generated method stub
+
 		try {
+
+			// Utilizo la clase Persona para guardar los datos para luego insertarlos en la
+			// BD
 			person.setId(codigo);
 			person.setNombre(nombre);
 			person.setNumero(numero);
@@ -126,10 +130,15 @@ public class BDManager implements AccesoaDatos {
 
 	public void PasarBDFichero() {
 		// TODO Auto-generated method stub
+
+		// El resultado de la query se guarda para luego escribirla en el 'Fichero.txt'
 		String uno = Consulta("SELECT * FROM `inicio` ORDER BY `inicio`.`Id` DESC");
+
 		BufferedWriter bw = null;
 		FileWriter fw = null;
+
 		try {
+
 			File file = new File("Fichero.txt");
 			// Si el archivo no existe, se crea
 
@@ -139,10 +148,16 @@ public class BDManager implements AccesoaDatos {
 			// flag true, indica adjuntar información al archivo.
 			fw = new FileWriter(file.getAbsoluteFile(), true);
 			bw = new BufferedWriter(fw);
+
+			// Escribe en 'Fichero.txt'
 			bw.write(uno);
-			System.out.println("información agregada!");
+
+			System.out.println("'Se ha sobreescrito satisfactoriamente el fichero con la BD'");
+
 		} catch (IOException e) {
+
 			e.printStackTrace();
+
 		} finally {
 			try {
 				// Cierra instancias de FileWriter y BufferedWriter

@@ -1,4 +1,4 @@
-package controlador;
+package modelo;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,21 +11,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
-import modelo.ConexionBD;
-import modelo.Persona;
-
 public class FicheroManager implements AccesoaDatos {
+
 	BDManager bd = new BDManager();
 	ConexionBD conn = new ConexionBD();
 	Persona personFich = new Persona();
-	
-	
+
 	@Override
 	public void LeerTodos() {
 		// TODO Auto-generated method stub
 		try {
 			FileReader entrada = new FileReader("Fichero.txt");
 			int c = entrada.read();
+
+			// Se lee e imprime el fichero caracter a caracter
 			while (c != -1) {
 				char letra = (char) c;
 				System.out.print(letra);
@@ -56,8 +55,11 @@ public class FicheroManager implements AccesoaDatos {
 			// flag true, indica adjuntar información al archivo.
 			fw = new FileWriter(file.getAbsoluteFile(), true);
 			bw = new BufferedWriter(fw);
-			bw.write(personFich.getId() + ";" + personFich.getNombre() + ";" + personFich.getNumero() + "\n;");
-			System.out.println("información agregada!");
+
+			// Se ecribe en el fichero con el formato a elegir
+			bw.write(personFich.getId() + ":" + personFich.getNombre() + ":" + personFich.getNumero() + "\n:");
+			System.out.println("información agregada satisfactoriamente");
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -85,8 +87,12 @@ public class FicheroManager implements AccesoaDatos {
 
 			Statement vaciar;
 			try {
+
+				// Se vacia la BD para que no haya conflictos con la PRIMARY KEY y los numero
+				// UNICOS
 				vaciar = conn.getConn().createStatement();
 				cont = vaciar.executeUpdate("TRUNCATE inicio");
+
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -101,6 +107,8 @@ public class FicheroManager implements AccesoaDatos {
 					cont++;
 				if (cont == 3) {
 
+					// Guardo cada 'columna' del fichero en un array que me permite separar cada
+					// dato introducido y la inserto en la BD
 					String[] usuario = todo.split(":");
 					try {
 						int r = 0;
@@ -111,6 +119,7 @@ public class FicheroManager implements AccesoaDatos {
 						r = stmt.executeUpdate(query);
 						stmt.close();
 						todo = "";
+
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -119,7 +128,7 @@ public class FicheroManager implements AccesoaDatos {
 					cont = 0;
 				}
 			}
-
+			System.out.println("'Se ha sobreescrito satisfactoriamente la BD con el Fichero'");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("No se ha encontrado el archivo");

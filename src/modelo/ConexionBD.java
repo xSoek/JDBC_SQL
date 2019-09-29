@@ -1,4 +1,5 @@
 package modelo;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,6 +13,7 @@ public class ConexionBD {
 	Connection myConn = null;
 	Statement stm = null;
 	ResultSet rst = null;
+
 	public ConexionBD() {
 		Properties props = new Properties();
 		try {
@@ -34,10 +36,10 @@ public class ConexionBD {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Connection getConn() {
-	
+
 		return myConn;
-		
+
 	}
 }

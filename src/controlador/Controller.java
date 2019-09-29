@@ -1,5 +1,7 @@
 package controlador;
 
+import modelo.AccesoaDatos;
+
 public class Controller {
 
 	private AccesoaDatos bd, fichero;
