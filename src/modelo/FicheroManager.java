@@ -7,41 +7,43 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
+import controlador.Controller;
 
 public class FicheroManager implements AccesoaDatos {
 
 	BDManager bd = new BDManager();
 	ConexionBD conn = new ConexionBD();
-	Persona personFich = new Persona();
+	public Persona personFich;
+	Controller control = new Controller();
 
 	@Override
-	public void LeerTodos() {
+	public String LeerTodos() {
+
 		// TODO Auto-generated method stub
 		try {
 			FileReader entrada = new FileReader("Fichero.txt");
+			escribeHashMap();
 			int c = entrada.read();
 
 			// Se lee e imprime el fichero caracter a caracter
-			while (c != -1) {
-				char letra = (char) c;
-				System.out.print(letra);
-				c = entrada.read();
-
+			for (Integer i : control.personas.keySet()) {
+				System.out.println(control.personas.get(i).getId() + ":" + control.personas.get(i).getNombre() + ":"
+						+ control.personas.get(i).getNumero());
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("No se ha encontrado el archivo");
 		}
+		return null;
 	}
 
 	@Override
-	public void AgregarDato(String codigo, String nombre, int numero) {
+	public String AgregarDato(String codigo, String nombre, int numero) {
 		// TODO Auto-generated method stub
 		BufferedWriter bw = null;
 		FileWriter fw = null;
+		personFich = new Persona();
 		try {
 			personFich.setId(codigo);
 			personFich.setNombre(nombre);
@@ -57,11 +59,12 @@ public class FicheroManager implements AccesoaDatos {
 			bw = new BufferedWriter(fw);
 
 			// Se ecribe en el fichero con el formato a elegir
-			bw.write(personFich.getId() + ":" + personFich.getNombre() + ":" + personFich.getNumero() + "\n:");
+			bw.write(personFich.getId() + "-" + personFich.getNombre() + "-" + personFich.getNumero() + "-");
 			System.out.println("información agregada satisfactoriamente");
-
+			return "Dato agregado con éxito";
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "Error al agregar";
 		} finally {
 			try {
 				// Cierra instancias de FileWriter y BufferedWriter
@@ -77,61 +80,217 @@ public class FicheroManager implements AccesoaDatos {
 	}
 
 	@Override
-	public void PasarBDFichero() {
-		// TODO Auto-generated method stub
+	public HashMap<Integer, Persona> escribeHashMap() {
 		try {
 			FileReader entrada = new FileReader("Fichero.txt");
 			int c = entrada.read();
-			String todo = "";
-			int cont = 0;
+			String text = "";
+			int cont = 0, key = 0;
 
-			Statement vaciar;
-			try {
-
-				// Se vacia la BD para que no haya conflictos con la PRIMARY KEY y los numero
-				// UNICOS
-				vaciar = conn.getConn().createStatement();
-				cont = vaciar.executeUpdate("TRUNCATE inicio");
-
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
+			// Se lee e imprime el fichero caracter a caracter
 			while (c != -1) {
+
 				char letra = (char) c;
 				c = entrada.read();
-				todo = todo + letra;
+				text = text + letra;
 
-				if (letra == ':')
+				if (letra == '-')
 					cont++;
 				if (cont == 3) {
-
+					key++;
+					personFich = new Persona();
 					// Guardo cada 'columna' del fichero en un array que me permite separar cada
 					// dato introducido y la inserto en la BD
-					String[] usuario = todo.split(":");
-					try {
-						int r = 0;
-						String query = "INSERT INTO inicio VALUES ('" + usuario[0] + "', '" + usuario[1] + "', "
-								+ usuario[2] + ")";
-						Statement stmt;
-						stmt = conn.getConn().createStatement();
-						r = stmt.executeUpdate(query);
-						stmt.close();
-						todo = "";
+					String[] usuario = text.split("-");
 
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					personFich.setId(usuario[0]);
+					personFich.setNombre(usuario[1]);
+					personFich.setNumero(Integer.parseInt(usuario[2]));
+					control.personas.put(key, personFich);
+
+					text = "";
 
 					cont = 0;
 				}
 			}
-			System.out.println("'Se ha sobreescrito satisfactoriamente la BD con el Fichero'");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println("No se ha encontrado el archivo");
+			e.printStackTrace();
 		}
+		return control.personas;
 	}
+
+	public boolean recibirHashMap(HashMap<Integer, Persona> persona) {
+		String escritura = "";
+		for (Integer i : persona.keySet()) {
+			escritura += persona.get(i).getId() + "-" + persona.get(i).getNombre() + "-" + persona.get(i).getNumero()
+					+ "-";
+		}
+
+		BufferedWriter bw = null;
+		FileWriter fw = null;
+		try {
+			File file = new File("Fichero.txt");
+			// Si el archivo no existe, se crea!
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			// flag true, indica adjuntar información al archivo.
+			fw = new FileWriter(file.getAbsoluteFile(), false);
+			bw = new BufferedWriter(fw);
+
+			// Se ecribe en el fichero con el formato a elegir
+			bw.write(escritura);
+			System.out.println("\nSe ha pasado la BD al fichero correctamente");
+
+		} catch (IOException e) {
+			System.out.println("\nHa ocurrido un error y no se pasado la información");
+			e.printStackTrace();
+		} finally {
+			try {
+				// Cierra instancias de FileWriter y BufferedWriter
+				if (bw != null)
+					bw.close();
+				if (fw != null)
+					fw.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public String BorrarDato(String codigo) {
+		int key = 0;
+		int findKey = 0;
+		String escritura = "";
+		escribeHashMap();
+		File file = new File("Fichero.txt");
+
+		// Si el archivo no existe, se crea!
+
+		for (Integer i : control.personas.keySet()) {
+			key++;
+			if (control.personas.get(i).getId().equalsIgnoreCase(codigo)) {
+				findKey = i;
+
+			}
+		}
+		control.personas.remove(findKey);
+		for (Integer i : control.personas.keySet()) {
+			escritura += control.personas.get(i).getId() + "-" + control.personas.get(i).getNombre() + "-"
+					+ control.personas.get(i).getNumero() + "-";
+		}
+
+		try {
+			BufferedWriter bw = null;
+			FileWriter fw = null;
+
+			// flag true, indica adjuntar información al archivo.
+			fw = new FileWriter(file.getAbsoluteFile(), false);
+			bw = new BufferedWriter(fw);
+
+			// Se ecribe en el fichero con el formato a elegir
+			bw.write(escritura);
+			bw.close();
+			fw.close();
+			return "Se ha eliminado con éxito";
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(0);
+			return "Ha ocurrido un error al eliminar";
+		}
+
+	}
+
+	@Override
+	public String BorrarTodo() {
+		// TODO Auto-generated method stub
+		File file = new File("Fichero.txt");
+		String truncate = "";
+		try {
+			BufferedWriter bw = null;
+			FileWriter fw = null;
+
+			// flag true, indica adjuntar información al archivo.
+			fw = new FileWriter(file.getAbsoluteFile(), false);
+			bw = new BufferedWriter(fw);
+
+			// Se ecribe en el fichero con el formato a elegir
+			bw.write(truncate);
+			bw.close();
+			fw.close();
+			return "Se ha vaciado con éxito el contenido de 'Fichero.txt'";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Ha ocurrido un error a la hora de eliminar el fichero";
+		}
+
+	}
+
+	@Override
+	public String Buscar(String codigo) {
+		// TODO Auto-generated method stub
+		int key = 0, findKey = 0;
+		String encontrado = "";
+		escribeHashMap();
+
+		for (Integer i : control.personas.keySet()) {
+			key++;
+			if (control.personas.get(i).getId().equalsIgnoreCase(codigo)) {
+				findKey = i;
+
+			}
+
+		}
+		encontrado += control.personas.get(findKey).getId() + "\t" + control.personas.get(findKey).getNombre() + "\t"
+				+ control.personas.get(findKey).getNumero();
+		return encontrado;
+	}
+
+	@Override
+	public String Modificar(String codigo, String nombre, int numero) {
+		// TODO Auto-generated method stub
+		int key = 0, findKey = 0;
+		String encontrado = "";
+		String escritura = "";
+		escribeHashMap();
+
+		for (Integer i : control.personas.keySet()) {
+			key++;
+			if (control.personas.get(i).getId().equalsIgnoreCase(codigo)) {
+				findKey = i;
+
+			}
+
+		}
+		control.personas.get(findKey).setNombre(nombre);
+		control.personas.get(findKey).setNumero(numero);
+		for (Integer i : control.personas.keySet()) {
+			escritura += control.personas.get(i).getId() + "-" + control.personas.get(i).getNombre() + "-"
+					+ control.personas.get(i).getNumero() + "-";
+		}
+
+		File file = new File("Fichero.txt");
+		try {
+			BufferedWriter bw = null;
+			FileWriter fw = null;
+
+			// flag true, indica adjuntar información al archivo.
+			fw = new FileWriter(file.getAbsoluteFile(), false);
+			bw = new BufferedWriter(fw);
+
+			// Se ecribe en el fichero con el formato a elegir
+			bw.write(escritura);
+			bw.close();
+			fw.close();
+			return "Usuario modificado con éxito";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Error al modificar usuario";
+		}
+
+	}
+
 }

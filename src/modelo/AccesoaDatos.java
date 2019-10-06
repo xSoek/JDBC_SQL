@@ -1,10 +1,22 @@
 package modelo;
 
+import java.util.HashMap;
+
 public interface AccesoaDatos {
 
-	public void LeerTodos();
+	public String LeerTodos();
 
-	public void AgregarDato(String codigo, String nombre, int numero);
+	public String AgregarDato(String codigo, String nombre, int numero);
+	
+	public boolean recibirHashMap(HashMap<Integer, Persona> persona);
 
-	public void PasarBDFichero();
+	public HashMap<Integer, Persona> escribeHashMap();
+	
+	public String BorrarDato(String codigo);
+	
+	public String BorrarTodo();
+	
+	public String Buscar (String codigo);
+	
+	public String Modificar(String codigo, String nombre, int numero);
 }

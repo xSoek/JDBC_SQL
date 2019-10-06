@@ -22,6 +22,7 @@ public class Main {
 		// Conectar Modelo, Controlador y Vista
 		menu.conectaControlador(cont);
 		cont.conectaControlador(bd, fichero);
+		
 
 		// Ejecuta el programa
 		menu.menu();

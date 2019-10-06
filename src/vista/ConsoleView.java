@@ -25,11 +25,12 @@ public class ConsoleView {
 		Scanner in = new Scanner(System.in);
 		int menuAccion = 0;
 		do {
-			System.out.println("|||////////////////////////");
-			System.out.println("|| Escoge una opción:   //");
-			System.out.println("||  1- Base de Datos   //");
-			System.out.println("||  2- Fichero        //");
-			System.out.println("|||////////////////////");
+			System.out.println();
+			System.out.println("     //////////////////////////");
+			System.out.println("    //  Escoge una opción:  //");
+			System.out.println("   //  1- Base de Datos    //");
+			System.out.println("  //   2- Fichero         //");
+			System.out.println(" //////////////////////////");
 
 			int menuOpcion = in.nextInt();
 
@@ -37,6 +38,10 @@ public class ConsoleView {
 			System.out.println("1- Leer todos los datos");
 			System.out.println("2- Ingresar Datos");
 			System.out.println("3- Pasar Datos a otro formato");
+			System.out.println("4- Borrar Dato");
+			System.out.println("5- Borrar Todo");
+			System.out.println("6- Buscar Dato");
+			System.out.println("7- Modificar Dato");
 			System.out.println("0- Salir \nElija una opcion...");
 			menuAccion = in.nextInt();
 
@@ -45,8 +50,8 @@ public class ConsoleView {
 				switch (menuAccion) {
 				case 1:
 					System.out.println("'Lectura de Base de Datos'");
-					System.out.println("ID\tNombre\tNumero");
-					control.leerTodosBD("bd");
+					System.out.println("ID\tNombre\tNumeros");
+					System.out.println(control.leerTodosBD("bd"));
 					break;
 				case 2:
 					System.out.print("Introduzca el Id: ");
@@ -59,6 +64,28 @@ public class ConsoleView {
 					break;
 				case 3:
 					control.cambiarBD("bd");
+					break;
+				case 4:
+					System.out.print("Introduzca el Id: ");
+					String code = in.next();
+					System.out.println(control.borrarDatoBD(code, "bd"));
+					break;
+				case 5:
+					System.out.println(control.borrarTodo("bd"));
+					break;
+				case 6:
+					System.out.print("Introduzca el Id: ");
+					String code1 = in.next();
+					System.out.println(control.buscarDato(code1, "bd"));
+					break;
+				case 7:
+					System.out.print("Buscar el Id: ");
+					String code2 = in.next();
+					System.out.print("Modificar nombre: ");
+					String name1 = in.next();
+					System.out.print("Modificar numero: ");
+					int number1 = in.nextInt();
+					control.ModificarDato(code2, name1, number1, "bd");
 					break;
 				case 0:
 					System.out.println("SALIR");
@@ -82,12 +109,34 @@ public class ConsoleView {
 						control.agregarBD(codigo, nombre, numero, "fich");
 
 					} catch (Exception e) { // TODO Auto-generated catch block
+						e.printStackTrace();
 						System.out.println("Se ha producido un error al intentar 'Ingresar Datos'");
 					}
 					break;
 				case 3:
 					control.cambiarBD("fich");
-
+					break;
+				case 4:
+					System.out.print("Introduzca el Id: ");
+					String code = in.next();
+					System.out.println(control.borrarDatoBD(code, "fich"));
+					break;
+				case 5:
+					System.out.println(control.borrarTodo("fich"));
+					break;
+				case 6:
+					System.out.print("Introduzca el Id: ");
+					String code1 = in.next();
+					System.out.println(control.buscarDato(code1, "fich"));
+					break;
+				case 7:
+					System.out.print("Buscar el Id: ");
+					String code2 = in.next();
+					System.out.print("Modificar nombre: ");
+					String name1 = in.next();
+					System.out.print("Modificar numero: ");
+					int number1 = in.nextInt();
+					control.ModificarDato(code2, name1, number1, "fich");
 					break;
 				case 0:
 					System.out.println("SALIR");

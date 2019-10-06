@@ -1,8 +1,1 @@
-AAB_02:q:2
-:AAA_99:Alejandra:98
-:AAA_55:Aaron:90
-:AAA_44:Alejandro:19
-:AAA_05:Pedro:666
-:AAA_02:Alicia:99
-:CCC_00:Hugo:67
-:
+AER_98-Ramon-789-ABD_00-Paco-9999-ABB_22-Tomás-31-AAA_03-Marquitos-2-AAA_01-Alejandro-12-

@@ -27,13 +27,13 @@ public class ConexionBD {
 
 		} catch (ClassNotFoundException cnfe) {
 			System.out.println(" _- Driver JDBC no encontrado -_");
-			cnfe.printStackTrace();
+			System.exit(0);
 		} catch (SQLException sqle) {
-			System.out.println(" _- Error al conectarse a la BD -_");
-			sqle.printStackTrace();
+			System.out.println(" _- Error al conectarse a la BD, revise el nombre de la base de datos -_");
+			System.exit(0);
 		} catch (Exception e) {
 			System.out.println(" _– Error de Conexión con MySQL -_");
-			e.printStackTrace();
+			System.exit(0);
 		}
 	}
 
