@@ -16,6 +16,7 @@ public class JsonManager implements AccesoaDatos {
 		encargadoPeticiones = new ApiRequests();
 
 		SERVER_PATH = "http://localhost/project1/Java&SQL/";
+		
 		GET_USER = "leeUsuarios.php";
 		SET_USER = "escribirUsuario.php";
 		DELETE_USER = "deleteUsuario.php";
