@@ -22,7 +22,7 @@ public class FicheroManager implements AccesoaDatos {
 
 		// TODO Auto-generated method stub
 		try {
-			FileReader entrada = new FileReader("Fichero.txt");
+			FileReader entrada = new FileReader("BBDD_Formatos/Fichero.txt");
 			escribeHashMap();
 			int c = entrada.read();
 
@@ -49,7 +49,7 @@ public class FicheroManager implements AccesoaDatos {
 			personFich.setNombre(nombre);
 			personFich.setNumero(numero);
 
-			File file = new File("Fichero.txt");
+			File file = new File("BBDD_Formatos/Fichero.txt");
 			// Si el archivo no existe, se crea!
 			if (!file.exists()) {
 				file.createNewFile();
@@ -82,7 +82,7 @@ public class FicheroManager implements AccesoaDatos {
 	@Override
 	public HashMap<Integer, Persona> escribeHashMap() {
 		try {
-			FileReader entrada = new FileReader("Fichero.txt");
+			FileReader entrada = new FileReader("BBDD_Formatos/Fichero.txt");
 			int c = entrada.read();
 			String text = "";
 			int cont = 0, key = 0;
@@ -130,7 +130,7 @@ public class FicheroManager implements AccesoaDatos {
 		BufferedWriter bw = null;
 		FileWriter fw = null;
 		try {
-			File file = new File("Fichero.txt");
+			File file = new File("BBDD_Formatos/Fichero.txt");
 			// Si el archivo no existe, se crea!
 			if (!file.exists()) {
 				file.createNewFile();
@@ -166,7 +166,7 @@ public class FicheroManager implements AccesoaDatos {
 		int findKey = 0;
 		String escritura = "";
 		escribeHashMap();
-		File file = new File("Fichero.txt");
+		File file = new File("BBDD_Formatos/Fichero.txt");
 
 		// Si el archivo no existe, se crea!
 
@@ -207,7 +207,7 @@ public class FicheroManager implements AccesoaDatos {
 	@Override
 	public String BorrarTodo() {
 		// TODO Auto-generated method stub
-		File file = new File("Fichero.txt");
+		File file = new File("BBDD_Formatos/Fichero.txt");
 		String truncate = "";
 		try {
 			BufferedWriter bw = null;
@@ -242,7 +242,6 @@ public class FicheroManager implements AccesoaDatos {
 				findKey = i;
 
 			}
-
 		}
 		encontrado += control.personas.get(findKey).getId() + "\t" + control.personas.get(findKey).getNombre() + "\t"
 				+ control.personas.get(findKey).getNumero();
@@ -272,7 +271,7 @@ public class FicheroManager implements AccesoaDatos {
 					+ control.personas.get(i).getNumero() + "-";
 		}
 
-		File file = new File("Fichero.txt");
+		File file = new File("BBDD_Formatos/Fichero.txt");
 		try {
 			BufferedWriter bw = null;
 			FileWriter fw = null;

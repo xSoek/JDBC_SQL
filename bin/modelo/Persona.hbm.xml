@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="modelo.Persona" table="inicio">
+		<id name="Id" type="string">
+			<column name="Id" length="30" not-null="true" />
+		</id>
+
+		<property name="Nombre" type="string">
+			<column name="Nombre" length="30" not-null="false" />
+		</property>
+
+		<property name="Numero" type="int">
+			<column name="Numero" unique="true" not-null="false" />
+		</property>
+
+	</class>
+
+</hibernate-mapping>
