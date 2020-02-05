@@ -234,7 +234,7 @@ public class JsonManager implements AccesoaDatos {
 			System.out.println("Fin ejecución");
 			System.exit(-1);
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -582,7 +582,7 @@ public class JsonManager implements AccesoaDatos {
 			System.out.println("Fin ejecución");
 			System.exit(-1);
 		}
-		return null;
+		return "Se ha modificado con exito al usuario";
 	}
 
 }

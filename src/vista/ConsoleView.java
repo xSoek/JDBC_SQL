@@ -26,13 +26,14 @@ public class ConsoleView {
 		int menuAccion = 0;
 		do {
 			System.out.println();
-			System.out.println("       ///////////////////////////");
-			System.out.println("      //    Escoge una opción: //");
-			System.out.println("     //    1- Base de Datos   //");
-			System.out.println("    //    2- Fichero         //");
-			System.out.println("   //    3- Hibernate       //");
-			System.out.println("  //    4- MongoDB         //");
-			System.out.println(" //    5- PHP & JSON      //");
+			System.out.println("        ///////////////////////////");
+			System.out.println("       //    Escoge una opción: //");
+			System.out.println("      //    1- Base de Datos   //");
+			System.out.println("     //    2- Fichero         //");
+			System.out.println("    //    3- Hibernate       //");
+			System.out.println("   //    4- MongoDB         //");
+			System.out.println("  //    5- PHP & JSON      //");
+			System.out.println(" //    6- NodeJS          //");
 			System.out.println("///////////////////////////");
 
 			int menuOpcion = in.nextInt();
@@ -70,7 +71,8 @@ public class ConsoleView {
 					System.out.println("2- Hibernate");
 					System.out.println("3- MongoDB");
 					System.out.println("4- PHP & JSON");
-					
+					System.out.println("5- API Node");
+
 					int opcionCambio = in.nextInt();
 					if (opcionCambio == 1) {
 						control.cambiarBD("bd", "fich");
@@ -78,10 +80,12 @@ public class ConsoleView {
 						control.cambiarBD("bd", "hbnt");
 					} else if (opcionCambio == 3) {
 						control.cambiarBD("bd", "mongo");
-					}else if (opcionCambio == 4) {
+					} else if (opcionCambio == 4) {
 						control.cambiarBD("bd", "php");
+					} else if (opcionCambio == 5) {
+						control.cambiarBD("bd", "node");
 					}
-					
+
 					break;
 				case 4:
 					System.out.print("Introduzca el Id: ");
@@ -136,18 +140,21 @@ public class ConsoleView {
 					System.out.println("2- Hibernate");
 					System.out.println("3- MongoDB");
 					System.out.println("4- PHP & JSON");
+					System.out.println("5- API Node");
 					int opcionCambio = in.nextInt();
-	
+
 					if (opcionCambio == 1) {
 						control.cambiarBD("fich", "bd");
 					} else if (opcionCambio == 2) {
 						control.cambiarBD("fich", "hbnt");
 					} else if (opcionCambio == 3) {
 						control.cambiarBD("fich", "mongo");
-					}else if (opcionCambio == 4) {
+					} else if (opcionCambio == 4) {
 						control.cambiarBD("fich", "php");
+					} else if (opcionCambio == 5) {
+						control.cambiarBD("fich", "node");
 					}
-					
+
 					break;
 				case 4:
 					System.out.print("Introduzca el Id: ");
@@ -204,16 +211,20 @@ public class ConsoleView {
 					System.out.println("2- Fichero");
 					System.out.println("3- MongoDB");
 					System.out.println("4- PHP & JSON");
+					System.out.println("5- API Node");
 					int opcionCambio = in.nextInt();
-					
+
 					if (opcionCambio == 1) {
 						control.cambiarBD("hbnt", "bd");
 					} else if (opcionCambio == 2) {
 						control.cambiarBD("hbnt", "fich");
 					} else if (opcionCambio == 3) {
 						control.cambiarBD("hbnt", "mongo");
-					}else if (opcionCambio == 4) {
+					} else if (opcionCambio == 4) {
 						control.cambiarBD("hbnt", "php");
+					} else if (opcionCambio == 5) {
+						control.cambiarBD("hbnt", "node");
+						
 					}
 
 					break;
@@ -272,16 +283,19 @@ public class ConsoleView {
 					System.out.println("2- Fichero");
 					System.out.println("3- Hibernate");
 					System.out.println("4- PHP & JSON");
+					System.out.println("5- API Node");
 					int opcionCambio = in.nextInt();
-					
+
 					if (opcionCambio == 1) {
 						control.cambiarBD("mongo", "bd");
 					} else if (opcionCambio == 2) {
 						control.cambiarBD("mongo", "fich");
-					}else if (opcionCambio == 3) {
+					} else if (opcionCambio == 3) {
 						control.cambiarBD("mongo", "hbnt");
-					}else if (opcionCambio == 4) {
+					} else if (opcionCambio == 4) {
 						control.cambiarBD("mongo", "php");
+					} else if (opcionCambio == 5) {
+						control.cambiarBD("mongo", "node");
 					}
 
 					break;
@@ -311,7 +325,7 @@ public class ConsoleView {
 					System.out.println("SALIR");
 					break;
 				}
-			}else if (menuOpcion == 5) {
+			} else if (menuOpcion == 5) {
 
 				// MENU HIBERNATE
 				switch (menuAccion) {
@@ -340,16 +354,19 @@ public class ConsoleView {
 					System.out.println("2- Fichero");
 					System.out.println("3- Hibernate");
 					System.out.println("4- Mongo");
+					System.out.println("5- API Node");
 					int opcionCambio = in.nextInt();
-					
+
 					if (opcionCambio == 1) {
 						control.cambiarBD("php", "bd");
 					} else if (opcionCambio == 2) {
 						control.cambiarBD("php", "fich");
-					}else if (opcionCambio == 3) {
+					} else if (opcionCambio == 3) {
 						control.cambiarBD("php", "hbnt");
-					}else if (opcionCambio == 4) {
+					} else if (opcionCambio == 4) {
 						control.cambiarBD("php", "mongo");
+					} else if (opcionCambio == 5) {
+						control.cambiarBD("php", "node");
 					}
 
 					break;
@@ -374,6 +391,76 @@ public class ConsoleView {
 					System.out.print("Modificar numero: ");
 					int number1 = in.nextInt();
 					control.ModificarDato(code2, name1, number1, "php");
+					break;
+				case 0:
+					System.out.println("SALIR");
+					break;
+				}
+			} else if (menuOpcion == 6) {
+
+				// MENU HIBERNATE
+				switch (menuAccion) {
+				case 1:
+					System.out.println("'Lectura de Base de Datos'");
+					System.out.println(control.leerTodosBD("node"));
+					break;
+				case 2:
+					System.out.print("Introduzca el Id: ");
+					String codigo = in.next();
+					System.out.print("\nIntroduzca el nombre: ");
+					String nombre = in.next();
+					System.out.print("\nIntroduzca el numero: ");
+					int numero = in.nextInt();
+					try {
+						control.agregarBD(codigo, nombre, numero, "node");
+
+					} catch (Exception e) { // TODO Auto-generated catch block
+						e.printStackTrace();
+						System.out.println("Se ha producido un error al intentar 'Ingresar Datos'");
+					}
+					break;
+				case 3:
+					System.out.println("1- BD SQL");
+					System.out.println("2- Fichero");
+					System.out.println("3- Hibernate");
+					System.out.println("4- Mongo");
+					System.out.println("5- PHP & JSON");
+					int opcionCambio = in.nextInt();
+
+					if (opcionCambio == 1) {
+						control.cambiarBD("node", "bd");
+					} else if (opcionCambio == 2) {
+						control.cambiarBD("node", "fich");
+					} else if (opcionCambio == 3) {
+						control.cambiarBD("node", "hbnt");
+					} else if (opcionCambio == 4) {
+						control.cambiarBD("node", "mongo");
+					} else if (opcionCambio == 5) {
+						control.cambiarBD("node", "php");
+					}
+
+					break;
+				case 4:
+					System.out.print("Introduzca el Id: ");
+					String code = in.next();
+					System.out.println(control.borrarDatoBD(code, "node"));
+					break;
+				case 5:
+					System.out.println(control.borrarTodo("node"));
+					break;
+				case 6:
+					System.out.print("Introduzca el Id: ");
+					String code1 = in.next();
+					System.out.println(control.buscarDato(code1, "node"));
+					break;
+				case 7:
+					System.out.print("Buscar el Id: ");
+					String code2 = in.next();
+					System.out.print("Modificar nombre: ");
+					String name1 = in.next();
+					System.out.print("Modificar numero: ");
+					int number1 = in.nextInt();
+					control.ModificarDato(code2, name1, number1, "node");
 					break;
 				case 0:
 					System.out.println("SALIR");

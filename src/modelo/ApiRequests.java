@@ -6,6 +6,7 @@ import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Request.Builder;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
@@ -46,6 +47,30 @@ public class ApiRequests {
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
+                .build();
+
+        Response response = client.newCall(request).execute();
+
+        return response.body().string();
+    }
+    
+    public String deleteRequest(String url, String json) throws IOException{
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .delete(body)
+                .build();
+
+        Response response = client.newCall(request).execute();
+
+        return response.body().string();
+    }
+    
+    public String putRequest(String url, String json) throws IOException{
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .put(body)
                 .build();
 
         Response response = client.newCall(request).execute();

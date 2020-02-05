@@ -11,6 +11,7 @@ import modelo.FicheroManager;
 import modelo.HibernateManager;
 import modelo.JsonManager;
 import modelo.MongoDBManager;
+import modelo.NodeJSManager;
 import vista.ConsoleView;
 
 public class MenuEjecucion {
@@ -24,10 +25,11 @@ public class MenuEjecucion {
 		AccesoaDatos hibernate = new HibernateManager();
 		AccesoaDatos mongo = new MongoDBManager();
 		AccesoaDatos php = new JsonManager();
+		AccesoaDatos node = new NodeJSManager();
 
 		// Conectar Modelo, Controlador y Vista
 		menu.conectaControlador(cont);
-		cont.conectaControlador(bd, fichero, hibernate, mongo, php);
+		cont.conectaControlador(bd, fichero, hibernate, mongo, php, node);
 		
 
 		// Ejecuta el programa

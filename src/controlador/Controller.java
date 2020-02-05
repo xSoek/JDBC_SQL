@@ -10,15 +10,16 @@ import modelo.Persona;
 public class Controller {
 
 	public HashMap<Integer, Persona> personas = new HashMap<Integer, Persona>();
-	private AccesoaDatos bd, fichero, hibernate, mongo, php;
+	private AccesoaDatos bd, fichero, hibernate, mongo, php, node;
 
 	public void conectaControlador(AccesoaDatos bd, AccesoaDatos fichero, AccesoaDatos hibernate, AccesoaDatos mongo,
-			AccesoaDatos php) {
+			AccesoaDatos php,AccesoaDatos node) {
 		this.bd = bd;
 		this.fichero = fichero;
 		this.hibernate = hibernate;
 		this.mongo = mongo;
 		this.php = php;
+		this.node = node;
 	}
 
 	public String leerTodosBD(String BdoFich) {
@@ -32,6 +33,8 @@ public class Controller {
 			return mongo.LeerTodos();
 		else if (BdoFich.equalsIgnoreCase("php"))
 			return php.LeerTodos();
+		else if (BdoFich.equalsIgnoreCase("node"))
+			return node.LeerTodos();
 		else
 			return " - Error, formato no encontrado - ";
 	}
@@ -47,6 +50,8 @@ public class Controller {
 			return mongo.AgregarDato(codigo, nombre, numero);
 		else if (BdoFich.equalsIgnoreCase("php"))
 			return php.AgregarDato(codigo, nombre, numero);
+		else if (BdoFich.equalsIgnoreCase("node"))
+			return node.AgregarDato(codigo, nombre, numero);
 		else
 			return " - Error, formato no encontrado - ";
 	}
@@ -61,6 +66,8 @@ public class Controller {
 				mongo.recibirHashMap(bd.escribeHashMap());
 			else if (cambioA.equalsIgnoreCase("php"))
 				php.recibirHashMap(bd.escribeHashMap());
+			else if (cambioA.equalsIgnoreCase("node"))
+				node.recibirHashMap(bd.escribeHashMap());
 
 		} else if (BdoFich.equalsIgnoreCase("fich")) {
 			if (cambioA.equalsIgnoreCase("bd"))
@@ -71,6 +78,8 @@ public class Controller {
 				mongo.recibirHashMap(fichero.escribeHashMap());
 			else if (cambioA.equalsIgnoreCase("php"))
 				php.recibirHashMap(fichero.escribeHashMap());
+			else if (cambioA.equalsIgnoreCase("node"))
+				node.recibirHashMap(fichero.escribeHashMap());
 
 		} else if (BdoFich.equalsIgnoreCase("hbnt")) {
 			if (cambioA.equalsIgnoreCase("bd"))
@@ -81,6 +90,8 @@ public class Controller {
 				mongo.recibirHashMap(hibernate.escribeHashMap());
 			else if (cambioA.equalsIgnoreCase("php"))
 				php.recibirHashMap(hibernate.escribeHashMap());
+			else if (cambioA.equalsIgnoreCase("node"))
+				node.recibirHashMap(hibernate.escribeHashMap());
 
 		} else if (BdoFich.equalsIgnoreCase("mongo")) {
 			if (cambioA.equalsIgnoreCase("bd"))
@@ -91,6 +102,8 @@ public class Controller {
 				hibernate.recibirHashMap(mongo.escribeHashMap());
 			else if (cambioA.equalsIgnoreCase("php"))
 				php.recibirHashMap(mongo.escribeHashMap());
+			else if (cambioA.equalsIgnoreCase("node"))
+				node.recibirHashMap(mongo.escribeHashMap());
 			
 		} else if (BdoFich.equalsIgnoreCase("php")) {
 			if (cambioA.equalsIgnoreCase("bd"))
@@ -101,6 +114,20 @@ public class Controller {
 				hibernate.recibirHashMap(php.escribeHashMap());
 			else if (cambioA.equalsIgnoreCase("mongo"))
 				mongo.recibirHashMap(php.escribeHashMap());
+			else if (cambioA.equalsIgnoreCase("node"))
+				node.recibirHashMap(php.escribeHashMap());
+			
+		} else if (BdoFich.equalsIgnoreCase("node")) {
+			if (cambioA.equalsIgnoreCase("bd"))
+				bd.recibirHashMap(node.escribeHashMap());
+			else if (cambioA.equalsIgnoreCase("fich"))
+				fichero.recibirHashMap(node.escribeHashMap());
+			else if (cambioA.equalsIgnoreCase("hbnt"))
+				hibernate.recibirHashMap(node.escribeHashMap());
+			else if (cambioA.equalsIgnoreCase("mongo"))
+				mongo.recibirHashMap(node.escribeHashMap());
+			else if (cambioA.equalsIgnoreCase("node"))
+				php.recibirHashMap(node.escribeHashMap());
 		}
 
 	}
@@ -116,6 +143,8 @@ public class Controller {
 			return mongo.BorrarDato(code);
 		else if (BdoFich.equalsIgnoreCase("php"))
 			return php.BorrarDato(code);
+		else if (BdoFich.equalsIgnoreCase("node"))
+			return node.BorrarDato(code);
 		else
 			return " - Error, formato no encontrado - [Se aconseja: REVISA borrarDatoBD at Controller.java]";
 	}
@@ -131,6 +160,8 @@ public class Controller {
 			return mongo.BorrarTodo();
 		else if (BdoFich.equalsIgnoreCase("php"))
 			return php.BorrarTodo();
+		else if (BdoFich.equalsIgnoreCase("node"))
+			return node.BorrarTodo();
 		else
 			return " - Error, formato no encontrado - ";
 	}
@@ -146,6 +177,8 @@ public class Controller {
 			return mongo.Buscar(code);
 		else if (BdoFich.equalsIgnoreCase("php"))
 			return php.Buscar(code);
+		else if (BdoFich.equalsIgnoreCase("node"))
+			return node.Buscar(code);
 		else
 			return " - Error, formato no encontrado - ";
 	}
@@ -161,6 +194,8 @@ public class Controller {
 			return mongo.Modificar(codigo, nombre, numero);
 		else if (BdoFich.equalsIgnoreCase("php"))
 			return php.Modificar(codigo, nombre, numero);
+		else if (BdoFich.equalsIgnoreCase("node"))
+			return node.Modificar(codigo, nombre, numero);
 		else
 			return " - Error, formato no encontrado - ";
 	}
